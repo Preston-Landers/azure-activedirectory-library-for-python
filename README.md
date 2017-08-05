@@ -2,6 +2,13 @@
 
 The ADAL for python library makes it easy for python applications to authenticate to AAD in order to access AAD protected web resources.
 
+## Fork Info
+
+The changes in this fork are:
+
+* `acquire_token_with_client_credentials` supports adding a scope parameter for V2 endpoint
+* TODO: would need to add scope parameter to similar methods
+
 ## Usage
 
 ### Install

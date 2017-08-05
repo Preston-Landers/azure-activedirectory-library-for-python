@@ -144,17 +144,20 @@ class AuthenticationContext(object):
 
         return self._acquire_token(token_func)
 
-    def acquire_token_with_client_credentials(self, resource, client_id, client_secret):
+    def acquire_token_with_client_credentials(self, resource, client_id, client_secret,
+                                              scope=None):
         '''Gets a token for a given resource via client credentials.
 
         :param str resource: A URI that identifies the resource for which the 
             token is valid.
         :param str client_id: The OAuth client id of the calling application.
         :param str client_secret: The OAuth client secret of the calling application.
+        :param str scope: The scope for the v2 endpoint
         :returns: dict with several keys, include "accessToken".
         '''
         def token_func(self):
-            token_request = TokenRequest(self._call_context, self, client_id, resource)
+            token_request = TokenRequest(self._call_context, self, client_id,
+                                         resource, scope=scope)
             return token_request.get_token_with_client_credentials(client_secret)
 
         return self._acquire_token(token_func)

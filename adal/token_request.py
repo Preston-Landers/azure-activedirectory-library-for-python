@@ -67,7 +67,7 @@ def _get_saml_grant_type(wstrust_response):
 class TokenRequest(object):
 
     def __init__(self, call_context, authentication_context, client_id, 
-                 resource, redirect_uri=None):
+                 resource, redirect_uri=None, scope=None):
 
         self._log = log.Logger("TokenRequest", call_context['log_context'])
         self._call_context = call_context
@@ -76,6 +76,7 @@ class TokenRequest(object):
         self._resource = resource
         self._client_id = client_id
         self._redirect_uri = redirect_uri
+        self._scope = scope
 
         self._cache_driver = None
         
@@ -162,7 +163,9 @@ class TokenRequest(object):
                                    self._client_id)
         add_parameter_if_available(oauth_parameters, OAUTH2_PARAMETERS.RESOURCE, 
                                    self._resource)
-        add_parameter_if_available(oauth_parameters, OAUTH2_PARAMETERS.REDIRECT_URI, 
+        add_parameter_if_available(oauth_parameters, OAUTH2_PARAMETERS.SCOPE,
+                                   self._scope)
+        add_parameter_if_available(oauth_parameters, OAUTH2_PARAMETERS.REDIRECT_URI,
                                    self._redirect_uri)
 
         return oauth_parameters
